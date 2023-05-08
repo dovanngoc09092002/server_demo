@@ -57,10 +57,10 @@ export const getVideoByIdService = (id) =>
     try {
       const result = await Videos.findOne({
         where: { id: id },
-        include : {
-          model : Users,
-          as : 'user'
-        }
+        include: {
+          model: Users,
+          as: "user",
+        },
       });
 
       if (!result) {
@@ -73,6 +73,115 @@ export const getVideoByIdService = (id) =>
           errCode: 0,
           message: "Lấy video bởi id thành công",
           data: result,
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+export const getVideoByJWT = (id) =>
+  new Promise(async (reslove, reject) => {
+    try {
+      const result = await Videos.findAll({
+        where: { UserId: parseInt(id) },
+        include: {
+          model: Users,
+          as: "user",
+        },
+      });
+
+      if (!result) {
+        reslove({
+          errCode: 0,
+          message: "Không tồn tại các video",
+        });
+      } else {
+        reslove({
+          errCode: 0,
+          message: "Lấy video bởi jwt thành công",
+          data: result,
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+//   idVideo: parseInt(id),
+// idUser: parseInt(req.idUser),
+// video: video,
+// image: image,
+export const updateTheVideoService = (body) =>
+  new Promise(async (reslove, reject) => {
+    try {
+      const result = await Videos.findOne({
+        where: { id: body.idVideo, UserId: body.idUser },
+        include: {
+          model: Users,
+          as: "user",
+        },
+      });
+
+      if (!result) {
+        reslove({
+          errCode: 1,
+          message: "Không tồn tại video của bạn",
+        });
+      } else {
+        const newVideo = await Videos.update(
+          {
+            video: body.video,
+            image: body.image,
+          },
+          {
+            where: {
+              id: result.id,
+            },
+          }
+        );
+
+        reslove({
+          errCode: 0,
+          message: "Cập nhật video thành công",
+          data: newVideo,
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+export const deleteTheVideo = (body) =>
+  new Promise(async (reslove, reject) => {
+    try {
+      const result = await Videos.findOne({
+        where: { id: body.idVideo, UserId: body.idUser },
+        include: {
+          model: Users,
+          as: "user",
+        },
+      });
+
+      if (!result) {
+        reslove({
+          errCode: 1,
+          message: "Không tồn tại video của bạn",
+        });
+      } else {
+        const newVideo = await Videos.destroy(
+          
+          {
+            where: {
+              id: result.id,
+            },
+          }
+        );
+
+        reslove({
+          errCode: 0,
+          message: "Xóa video thành công",
+          data: newVideo,
         });
       }
     } catch (error) {

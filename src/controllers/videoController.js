@@ -52,7 +52,7 @@ export const getVideoController = async (req, res) => {
 
 export const getVideoByIdController = async (req, res) => {
   const id = req.params.id;
-  
+
   try {
     const response = await videoService.getVideoByIdService(id);
     return res.status(200).json(response);
@@ -64,3 +64,61 @@ export const getVideoByIdController = async (req, res) => {
     });
   }
 };
+
+export const getVideoByJWTController = async (req, res) => {
+  const id = req.idUser;
+
+  try {
+    const response = await videoService.getVideoByJWT(id);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({
+      errCode: -1,
+      message: "Lỗi server",
+      error: error,
+    });
+  }
+};
+
+export const updateTheVideo = async (req, res) => {
+  // const id = req.params.id;
+  const { video , image , id} = req.body;
+  const body = {
+    idVideo: parseInt(id),
+    idUser: parseInt(req.idUser),
+    video: video,
+    image: image,
+  };
+
+  try {
+    const response = await videoService.updateTheVideoService(body);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({
+      errCode: -1,
+      message: "Lỗi server",
+      error: error,
+    });
+  }
+};
+
+export const deleteTheVideo = async (req, res) => {
+  // const id = req.params.id;
+  const {  id } = req.body;
+  const body = {
+    idVideo: parseInt(id),
+    idUser: parseInt(req.idUser),
+  };
+
+  try {
+    const response = await videoService.deleteTheVideo(body);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({
+      errCode: -1,
+      message: "Lỗi server",
+      error: error,
+    });
+  }
+};
+
