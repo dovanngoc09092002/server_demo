@@ -10,12 +10,13 @@ const app = express();
 // cors
 app.use(
   cors({
+    origin: true,
     credentials: true,
-    origin: "http://localhost:3000",
+    methods: ["GET", "PUT", "POST", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-
+app.set("trust proxy", 1);
 
 //cookie parser
 app.use(cookieParser());
@@ -31,7 +32,7 @@ const port = 5555;
 const server = http.createServer(app);
 export const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: true,
     credentials: true,
   },
 });
