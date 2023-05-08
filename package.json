@@ -29,7 +29,11 @@
     "lru-cache": "^5.1.1"
   },
   "engines": {
+<<<<<<< HEAD
   "node": "14.17.0"
+=======
+  "node": "16.17.1"
+>>>>>>> fe5514fa0d8411dc80a983b994c2445c3febe2f8
 },
   "devDependencies": {
     "@babel/cli": "^7.21.0",
