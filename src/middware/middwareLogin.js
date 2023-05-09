@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken");
 
 export const middlewareLogin = (req, res, next) => {
-  return res.json('hello world ngoc)
+  return res.json('hello world ngoc')
   const token = req.headers.cookie.split("=")[1];
 
   if (!token) {
