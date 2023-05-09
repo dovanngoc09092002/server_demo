@@ -1,8 +1,9 @@
 var jwt = require("jsonwebtoken");
 
 export const middlewareLogin = (req, res, next) => {
+  return res.json('hello world ngoc)
   const token = req.headers.cookie.split("=")[1];
- return res.json( { data : token } )
+
   if (!token) {
     return res.json({
       message: "You are not logged in",
