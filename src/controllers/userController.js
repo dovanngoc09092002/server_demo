@@ -42,7 +42,7 @@ export const userLoginController = async (req, res) => {
            httpOnly: true,
            secure: true,
            sameSite: "none",
-           domain: "localhost",
+           domain: ".api-ngoc.onrender.com",
            path: "/",
          });
      return res.status(200).json(response);
