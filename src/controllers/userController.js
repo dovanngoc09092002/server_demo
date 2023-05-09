@@ -34,8 +34,25 @@ export const userLoginController = async (req, res) => {
         message: "Cần điền đủ thông tin",
       });
     }
-    const response = await userService.userLoginService(req.body);
-    return res.status(200).json(response);
+    
+       const response = await userService.userLoginService(req.body);
+    if (response.errCode === 0){
+         res.cookie("token", response.token, {
+           maxAge: 86400000,
+           httpOnly: true,
+           secure: true,
+           sameSite: "none",
+           domain: "localhost",
+           path: "/",
+         });
+     return res.status(200).json(response);
+
+    }
+     return res.status(200).json(response);
+    
+    
+    
+ 
   } catch (error) {
     return res.status(400).json({
       errCode: -1,
